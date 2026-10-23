@@ -1,0 +1,211 @@
+/* Message metadata uses the chat width; small media never shrinks its header. */
+.msg-row .bubble.has-attachments,
+.msg-row .bubble.has-sticker {
+  width:calc(100% - 52px);
+  max-width:calc(100% - 52px);
+}
+.bubble.has-attachments > .att-gallery { display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px; width:100%; max-width:100%; }
+.bubble.has-sticker > .sticker-message { width:min(168px,100%); max-width:100%; }
+
+/* Intrinsic proportions keep panoramas and portraits complete. Media shares
+   the sticker's 168px ceiling; every attachment wraps independently. */
+.att-gallery > .att-item { flex:0 1 auto; align-self:flex-start; min-width:0; max-width:100%; height:auto; aspect-ratio:auto; }
+.att-gallery > .att-item[data-kind="image"] { width:fit-content; min-width:min(36px,100%); min-height:36px; max-width:min(168px,100%); align-items:center; justify-content:center; background:transparent; }
+.att-gallery .att-media { width:auto; height:auto; max-width:100%; max-height:168px; object-fit:contain; border-radius:inherit; }
+.att-gallery > .att-item[data-kind="video"] { width:168px; min-width:min(36px,100%); max-width:min(168px,100%); }
+.att-gallery .att-video-card { height:auto; }
+.att-gallery .att-video-thumb { width:100%; min-height:36px; max-height:168px; }
+.att-gallery .att-video-poster { object-fit:contain; }
+.att-gallery .att-video-meta { display:none; }
+.att-gallery .att-video-play { width:34px; height:34px; }
+.att-gallery .att-video-play svg { width:22px; height:22px; }
+.att-gallery .att-media-card { width:168px; max-height:168px; min-height:100px; overflow:hidden; }
+.att-gallery .att-media-card-art { min-height:40px; }
+.att-gallery .att-media-card-title { font-size:12px; overflow-wrap:anywhere; }
+.att-gallery .att-loading { font-size:18px; }
+.att-gallery > .att-item:has(> .att-file) { width:320px; max-width:100%; min-width:0; min-height:76px; }
+.att-gallery .att-file { height:auto; min-height:76px; padding:12px 44px 12px 12px !important; }
+.att-gallery .att-file-name { white-space:normal; overflow:visible; overflow-wrap:anywhere; text-overflow:clip; line-height:1.45; }
+.att-gallery .att-file-icon { display:flex; flex-direction:column; justify-content:center; gap:1px; font-size:8px; }
+.att-file-icon svg { width:24px; height:24px; }
+.att-gallery > .att-item[data-kind="audio"] { width:380px; max-width:100%; border:0; overflow:visible; }
+.att-gallery .icon-btn.att-dl { top:5px !important; right:5px !important; width:28px !important; height:28px !important; border-radius:8px !important; transform:none !important; opacity:0; transition:opacity .13s ease,background .15s ease,transform .2s ease !important; }
+.att-gallery .att-item:is(:hover,:focus-within) .icon-btn.att-dl { opacity:.5; visibility:visible; pointer-events:auto; }
+.att-gallery .att-item .icon-btn.att-dl:is(:hover,:focus-visible) { opacity:1; filter:brightness(1.04); }
+.att-gallery .att-item .icon-btn.att-dl:active { transform:scale(.95) !important; }
+body[data-mobile-ui="1"] .att-gallery .icon-btn.att-dl { opacity:.5; visibility:visible; pointer-events:auto; }
+@media (hover:none) { .att-gallery .icon-btn.att-dl { opacity:.5; visibility:visible; pointer-events:auto; } }
+@media (prefers-reduced-motion:reduce) { .att-gallery .icon-btn.att-dl { transition:none !important; } }
+
+.media-document { pointer-events:auto; width:min(1060px,calc(100vw - 48px)); height:min(78dvh,900px); min-height:220px; display:flex; flex-direction:column; gap:10px; }
+.media-document-text { margin:0; flex:1; min-height:0; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; padding:22px; color:var(--text,#e9f0f7); background:#111922; border:1px solid #34414e; border-radius:12px; font:14px/1.6 ui-monospace,Consolas,monospace; text-align:left; user-select:text; }
+.media-document-pdf { width:100%; height:100%; flex:1; min-height:0; border:0; border-radius:12px; background:#29313b; }
+.media-document-status { margin:0; padding:8px; font-size:13px; color:var(--muted,#aab9c7); }
+.media-document-open { align-self:flex-start; }
+.media-pdf-toolbar { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; font-size:13px; }
+.media-pdf-toolbar input { width:64px; margin-left:6px; padding:7px; border:1px solid #465769; border-radius:8px; color:inherit; background:#16212a; }
+.media-pdf-pages { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; padding:10px; border-radius:12px; background:#28323c; }
+.media-pdf-page { position:relative; width:100%; max-width:1100px; margin:0 auto 12px; background:white; color:#222; box-shadow:0 2px 10px #0005; }
+.media-pdf-page canvas { display:block; width:100%; height:100%; }
+@media (max-width:600px) { .media-document { width:calc(100vw - 28px); height:78dvh; } .media-document-text { padding:14px; } }
+
+/* Keep the readout on the viewer's outer edge, level with its close button.
+   Overlap is measured against painted media, so black letterboxing stays opaque. */
+.modal[data-size="media"] .media-zoom-controls,
+.modal[data-size="media"] .media-zoom-controls-video {
+  position:fixed !important;
+  top:max(12px,env(safe-area-inset-top)) !important;
+  left:max(12px,env(safe-area-inset-left)) !important;
+  right:auto !important;
+  z-index:20;
+  height:40px;
+  min-width:64px;
+  box-sizing:border-box;
+  padding:3px !important;
+  gap:0 !important;
+  border:1px solid rgba(145,168,191,.20) !important;
+  border-radius:12px !important;
+  background:rgba(15,21,28,.96) !important;
+  box-shadow:0 8px 24px rgba(0,0,0,.24) !important;
+  opacity:1;
+  transition:opacity .12s ease;
+}
+.modal[data-size="media"] .media-zoom-controls.is-over-content { opacity:.7; }
+.modal[data-size="media"] .media-zoom-btn[data-media-zoom="reset"] {
+  width:100%; height:32px; padding:0 10px; color:var(--text,#e9f0f7);
+  font-size:12px; font-weight:650; letter-spacing:.01em;
+}
+.media-document-html { flex:1; min-height:0; width:100%; border:1px solid #34414e; border-radius:12px; background:white; }
+.media-office-pages { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; background:#28323c; border-radius:12px; padding:12px; text-align:left; }
+.media-office-content,.media-pdf-stack { width:100%; min-width:0; }
+.media-office-pages,.media-pdf-pages { touch-action:auto; }
+
+/* Fullscreen is a two-row viewport: media consumes all space above a fixed-
+   height transport row. Normal modal vh caps must not leave a gap underneath. */
+.modal[data-size="media"] .vpu:fullscreen {
+  width:100vw !important; height:100dvh !important;
+  max-width:none !important; max-height:none !important;
+  display:flex !important; flex-direction:column;
+  border:0 !important; border-radius:0 !important; overflow:hidden;
+}
+.modal[data-size="media"] .vpu:fullscreen .vpu-stage {
+  flex:1 1 0; width:100%; min-height:0 !important; max-height:none !important; overflow:hidden;
+}
+.modal[data-size="media"] .vpu:fullscreen :is(.media-zoom-shell,.media-zoom-viewport,.media-zoom-surface) {
+  width:100%; height:100%; min-height:0; max-width:none !important; max-height:none !important;
+}
+.modal[data-size="media"] .vpu:fullscreen .vpu-video {
+  width:100%; height:100%; max-width:100% !important; max-height:100% !important; border-radius:0 !important; object-fit:contain;
+}
+.modal[data-size="media"] .vpu:fullscreen .vpu-controls { flex:0 0 auto; width:100%; box-sizing:border-box; margin-top:auto; padding-bottom:max(10px,env(safe-area-inset-bottom)) !important; }
+.modal[data-size="media"] .vpu:fullscreen .media-zoom-controls { position:fixed !important; }
+body[data-mobile-ui="1"] .modal[data-size="media"] { padding:0 !important; }
+body[data-mobile-ui="1"] .modal[data-size="media"] .modal-body { padding:0 !important; overflow:hidden !important; }
+body[data-mobile-ui="1"] .modal[data-size="media"] .modal-head { padding:0 !important; }
+body[data-mobile-ui="1"] .modal[data-size="media"] .modal-card { width:100% !important; height:100% !important; border-radius:0 !important; }
+.bubble-top { flex-wrap:wrap; row-gap:6px; }
+.bubble-top > .bubble-name { flex-shrink:0; max-width:100%; }
+.bubble-top > .bubble-time { flex:none; }
+.message-seen { flex:0 1 auto; max-width:100%; }
+.message-seen-avatars {
+  flex-wrap:nowrap;
+  min-width:24px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+}
+.message-seen-label { white-space:nowrap; }
+body[data-mobile-ui="1"] .msg-row :is(.bubble.has-attachments,.bubble.has-sticker) {
+  width:calc(100% - 42px);
+  max-width:calc(100% - 42px);
+}
+body[data-companion-chat="1"] .msg-row :is(.bubble.has-attachments,.bubble.has-sticker) {
+  flex:1 1 0;
+  width:0;
+  max-width:100%;
+}
+
+/* The avatar spans the display-name line through the first message line. The
+   shared geometry observer also handles wrapped headers and reply previews. */
+.msg-row { --message-line-height:20.3px; }
+body[data-mobile-ui="1"] .msg-row { --message-line-height:22.2px; }
+.msg-row > .msg-avatar,
+body[data-mobile-ui="1"] .msg-row > .msg-avatar,
+.msg-row.has-reply > .msg-avatar {
+  width:var(--message-avatar-size,40.6px);
+  height:var(--message-avatar-size,40.6px);
+  min-width:var(--message-avatar-size,40.6px);
+  max-width:var(--message-avatar-size,40.6px);
+  flex:0 0 var(--message-avatar-size,40.6px);
+  aspect-ratio:1;
+  align-self:flex-start;
+  border-radius:50%;
+  margin-top:var(--message-avatar-offset,4px);
+}
+.msg-row > .bubble,
+.msg-row > .bubble:is(.has-attachments,.has-sticker),
+body[data-mobile-ui="1"] .msg-row > .bubble:is(.has-attachments,.has-sticker) {
+  max-width:calc(100% - var(--message-avatar-size,40.6px) - 10px);
+}
+
+/* Reply context occupies its own row, so neither the line nor its connector
+   can cross the sender's avatar, including narrow chats and wrapped headers. */
+body .msg-row.has-reply {
+  display:grid; grid-template-columns:40px minmax(0,1fr); column-gap:10px; row-gap:2px !important;
+}
+body .msg-row.has-reply > .reply-preview {
+  grid-column:2; grid-row:1; align-self:center; min-height:22px; margin:0; width:100%; max-width:100%;
+}
+body .msg-row.has-reply > .reply-preview::before {
+  left:-30px !important; top:50% !important; width:24px !important; height:calc(50% + 2px); border-radius:8px 0 0 0;
+}
+body .msg-row.has-reply > .msg-avatar { grid-column:1; grid-row:2; margin-top:0; }
+body .msg-row.has-reply > .bubble,
+body[data-mobile-ui="1"] .msg-row.has-reply > .bubble,
+body[data-companion-chat="1"] .msg-row.has-reply > .bubble {
+  grid-column:2; grid-row:2; width:100%; max-width:100%; min-width:0;
+}
+
+/* Shared profile/room renderer. These rules apply equally to tiny tooltips,
+   mobile chat, call tiles, schedules, and editor previews. */
+.app-media-frame { position:relative; overflow:hidden; }
+.app-avatar-frame {
+  aspect-ratio:1;
+  flex-shrink:0;
+  border-radius:50% !important;
+}
+.user-profile-banner.app-banner-frame,
+.settings-banner-clip {
+  height:auto !important;
+  aspect-ratio:17 / 6;
+  flex:0 0 auto !important;
+}
+.app-media-frame > img.app-cropped-image {
+  position:absolute !important;
+  top:50% !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  transform-origin:center !important;
+  border-radius:0 !important;
+  user-select:none;
+  -webkit-user-drag:none;
+  pointer-events:none;
+}
+.app-media-frame > img.app-cropped-image[hidden] { display:none !important; }
+body #sidebar-nav-surface .room-avatar,
+body #sidebar-nav-surface .room-row:hover .room-avatar,
+body[data-mobile-ui="1"] #sidebar-nav-surface .room-avatar {
+  width:42px !important;
+  height:42px !important;
+  min-width:42px !important;
+  max-width:42px !important;
+  flex:0 0 42px !important;
+  aspect-ratio:1;
+  border-radius:50% !important;
+}

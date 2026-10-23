@@ -1,0 +1,7 @@
+.msg-menu-group[hidden] { display: none; }
+.msg-menu-btn.msg-menu-group-toggle { width: 100%; grid-template-columns: 20px minmax(0, 1fr); }
+.msg-menu-group-content { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 160ms ease, opacity 140ms ease; }
+.msg-menu-group.expanded .msg-menu-group-content { grid-template-rows: 1fr; opacity: 1; }
+.msg-menu-group-inner { min-height: 0; overflow: hidden; padding-left: 9px; }
+.msg-menu-group-inner .msg-menu-btn { width: 100%; border-left: 1px solid rgba(160,190,220,.16); border-radius: 5px; }
+@media (prefers-reduced-motion: reduce) { .msg-menu-group-content { transition: none; } }

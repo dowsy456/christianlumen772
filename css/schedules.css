@@ -1,0 +1,441 @@
+/* css/schedules.css — loaded in index.html cascade order. */
+/* -------------------- Schedules (School) -------------------- */
+
+.sched-page{
+  width:100%;
+  max-width:none;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+
+  /* Prevent drag-to-select highlight on Schedules page */
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+.sched-topcard{
+  border:1px solid rgba(255,255,255,.10);
+  background:#2b2d31;
+  border-radius:8px;
+  padding:16px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.sched-top-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.sched-top-ico{
+  width:44px;
+  height:44px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(110,168,255,.28);
+  background:#383a40;
+  box-shadow:none;
+}
+
+.sched-title{
+  font-weight:900;
+  letter-spacing:.2px;
+  font-size:18px;
+  line-height:1.15;
+}
+
+.sched-sub{
+  margin-top:2px;
+  color: rgba(255,255,255,.62);
+  font-size:12.5px;
+}
+
+.sched-top-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.sched-preview-days{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.sched-preview-btn{
+  appearance:none;
+  min-width:42px;
+  height:38px;
+  padding:0 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.78);
+  font-weight:850;
+  letter-spacing:.2px;
+  cursor:pointer;
+  user-select:none;
+  transition: background .16s ease, border-color .16s ease, box-shadow .16s ease, transform .10s ease, color .16s ease;
+}
+
+.sched-preview-btn:hover{
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.20);
+  color: rgba(255,255,255,.92);
+}
+
+.sched-preview-btn:active{ transform: translateY(1px); }
+
+.sched-preview-btn.is-active{
+  border-color: rgba(110,168,255,.42);
+  background: linear-gradient(180deg, rgba(110,168,255,.18), rgba(255,255,255,.04));
+  color: rgba(255,255,255,.96);
+  box-shadow: 0 14px 34px rgba(0,0,0,.35);
+}
+
+.sched-type-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 12px;
+  border-radius: 999px;
+  border:1px solid rgba(110,168,255,.34);
+  background: linear-gradient(180deg, rgba(110,168,255,.16), rgba(255,255,255,.03));
+  box-shadow: 0 14px 34px rgba(0,0,0,.35);
+  user-select:none;
+}
+
+.sched-type-ico{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+}
+
+.sched-type-text{
+  font-weight:850;
+  letter-spacing:.2px;
+  font-size:13px;
+}
+
+/* Layout */
+
+.sched-split{
+  display:grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap:14px;
+  align-items:start;
+}
+
+@media (max-width: 980px){
+  .sched-split{ grid-template-columns: 1fr; }
+}
+
+/* Cards */
+
+.sched-card{
+  border:1px solid rgba(255,255,255,.10);
+  background:#2b2d31;
+  border-radius:8px;
+  padding:14px;
+}
+
+.sched-card-title{
+  font-weight:900;
+  letter-spacing:.2px;
+  margin-bottom:10px;
+}
+
+/* People grid */
+
+.sched-people-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap:10px;
+}
+
+.sched-person-card{
+  appearance:none;
+  width:100%;
+  border:1px solid rgba(255,255,255,.10);
+  background:#313338;
+  color:var(--text);
+  border-radius:8px;
+  padding:12px 12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+  transition: transform .10s ease, border-color .16s ease, background .16s ease;
+  text-align:left;
+}
+
+.sched-person-card:hover{
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.16);
+  transform: translateY(-1px);
+}
+
+.sched-avatar{
+  width:42px;
+  height:42px;
+  border-radius: 16px;
+  overflow:hidden;
+  border:1px solid rgba(110,168,255,.28);
+  background: rgba(255,255,255,.03);
+  position:relative;
+  flex: 0 0 auto;
+}
+
+.sched-avatar img{
+  position:absolute; left:50%; top:50%;
+  width:100%; height:100%;
+  object-fit:contain;
+  object-position:center;
+  transform: translate(-50%,-50%) scale(1);
+  transform-origin:center;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+.sched-person-meta{min-width:0}
+
+.sched-person-name{
+  font-weight:900;
+  font-size:13.5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.sched-person-go{
+  margin-left:auto;
+  opacity:.8;
+}
+
+/* Person view head */
+
+.sched-view-head{
+  width:100%;
+  max-width:none;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.sched-person-title{
+  font-weight:900;
+  font-size: 14px;
+  opacity: .95;
+}
+
+/* Tables: make them look like native cards (not raw text) */
+
+.sched-times,
+.sched-grid{
+  width:100%;
+  overflow:auto;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.12);
+  border-radius:18px;
+}
+
+/* Times table (3 columns) */
+
+.sched-times-head{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display:grid;
+  grid-template-columns: 1.35fr 1fr .75fr;
+  gap:10px;
+  padding:10px 12px;
+  background: linear-gradient(180deg, rgba(12,16,24,.40), rgba(6,10,18,.28));
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size:12px;
+  font-weight:850;
+  letter-spacing:.2px;
+  color: rgba(255,255,255,.62);
+}
+
+.sched-times-row{
+  display:grid;
+  grid-template-columns: 1.35fr 1fr .75fr;
+  gap:10px;
+  padding:10px 12px;
+  align-items:center;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.sched-times-row:hover{ background: rgba(255,255,255,.03); }
+
+.sched-times-row.is-active{
+  background: rgba(255,216,77,.06);
+}
+
+.sched-times-row.is-active .sched-times-period{
+  color:#ffd84d;
+}
+
+.sched-times-period{
+  font-weight:900;
+  letter-spacing:.15px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.sched-times-time,
+.sched-times-dur{
+  color: rgba(255,255,255,.78);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* Schedule grid (6 columns) */
+
+.sched-grid-head{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display:grid;
+  grid-template-columns: 1.05fr 1fr .75fr 1.55fr 1.25fr .8fr;
+  gap:12px;
+  padding:10px 12px;
+  background: linear-gradient(180deg, rgba(12,16,24,.40), rgba(6,10,18,.28));
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size:12px;
+  font-weight:850;
+  letter-spacing:.2px;
+  color: rgba(255,255,255,.62);
+  min-width: 860px;
+}
+
+.sched-grid-row{
+  display:grid;
+  grid-template-columns: 1.05fr 1fr .75fr 1.55fr 1.25fr .8fr;
+  gap:12px;
+  padding:10px 12px;
+  align-items:center;
+  border-top:1px solid rgba(255,255,255,.08);
+  min-width: 860px;
+}
+
+.sched-grid-row:hover{ background: rgba(255,255,255,.03); }
+
+.sched-grid-row[data-sched-class-hover="1"]{
+  cursor:default;
+}
+
+.sched-grid-row.is-active{
+  background: rgba(255,216,77,.06);
+}
+
+.sched-grid-row.is-active .sched-cell-period{
+  color:#ffd84d;
+}
+
+/* Generic cell styling (works for both tables) */
+
+.sched-cell{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color: rgba(255,255,255,.82);
+}
+
+.sched-cell-period{ font-weight:900; }
+
+.sched-cell-time,
+.sched-cell-duration{ color: rgba(255,255,255,.78); }
+
+.sched-cell-teacher,
+.sched-cell-room{ color: rgba(255,255,255,.76); }
+
+.sched-grid-row.sched-grid-empty{
+  background: rgba(255,255,255,.02);
+}
+
+.sched-grid-row.sched-grid-empty:hover{ background: rgba(255,255,255,.02); }
+
+.sched-cell-empty{
+  grid-column: 1 / -1;
+  white-space: normal;
+  text-align: center;
+  padding: 14px 6px;
+  color: rgba(255,255,255,.70);
+}
+
+/* Schedule details are one responsive card; no nested scrolling surfaces. */
+.sched-page.sched-selected{width:100%;max-width:none;min-height:0;padding:clamp(8px,1.5vw,18px);gap:10px;container-type:inline-size}
+.sched-selected .sched-person-view{padding:10px;min-width:0}
+.sched-person-view .sched-view-head{border:0;background:none;padding:0 0 10px;min-height:40px;gap:9px}
+.sched-person-view .sched-person-title{overflow-wrap:anywhere;min-width:0}
+.sched-person-view .sched-avatar{width:32px;height:32px;min-width:32px;aspect-ratio:1;border-radius:50%;flex:0 0 32px}
+.sched-person-actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.sched-selected .sched-grid{overflow:visible;min-width:0;border-radius:12px}
+.sched-selected .sched-grid-head,.sched-selected .sched-grid-row{min-width:0;grid-template-columns:minmax(0,.85fr) minmax(0,1.35fr) minmax(0,.7fr) minmax(0,1.65fr) minmax(0,1.3fr) minmax(0,.5fr);gap:8px;padding:8px 10px}
+.sched-selected .sched-grid-row{min-height:36px;font-size:clamp(11px,1.05vw,14px);line-height:1.25}
+.sched-selected .sched-grid-head{position:static;border-radius:11px 11px 0 0;font-size:11px}
+.sched-selected .sched-cell{min-width:0;white-space:normal;overflow-wrap:anywhere;text-overflow:clip;line-height:1.25}
+.sched-class-label{display:inline-block;max-width:100%;vertical-align:middle;overflow-wrap:anywhere}
+.sched-selected .sched-topcard{min-height:64px;padding:9px 12px;flex-wrap:wrap;gap:8px}
+.sched-selected .sched-top-right{gap:8px;flex-wrap:wrap}
+.sched-selected .sched-top-ico{width:32px;height:32px}
+.sched-selected .sched-type-badge{min-height:32px;padding:3px 7px}
+.sched-selected .sched-type-ico{width:24px;height:24px}
+.sched-selected .sched-preview-btn{height:28px;min-width:28px;padding:0 6px}
+.sched-editor{display:flex;flex-direction:column;gap:12px;min-width:0}
+#modal[data-size="schedule-editor"] .modal-card{width:min(920px,calc(100vw - 24px));max-width:920px}
+.sched-editor-days,.sched-editor-tools,.sched-editor-copy,.sched-editor-row-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.sched-editor-row{border:1px solid var(--ui-border,rgba(255,255,255,.15));border-radius:12px;padding:12px;margin:12px 0;min-width:0;content-visibility:auto;contain-intrinsic-size:auto 285px}
+.sched-editor-row:focus-within{content-visibility:visible}
+.sched-editor-row-actions svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sched-editor-row legend{font-weight:700;padding:0 6px}
+.sched-editor-fields{display:grid;grid-template-columns:minmax(100px,1fr) minmax(200px,2fr);gap:10px;margin-bottom:10px}
+.sched-editor label{display:flex;flex-direction:column;gap:4px;font-size:12px;min-width:0;color:var(--text,#dfe9f3)}
+.sched-editor input,.sched-editor select{min-width:0;width:100%;box-sizing:border-box;padding:9px;border:1px solid var(--ui-border,rgba(255,255,255,.15));border-radius:8px;background:var(--ui-panel-2,#202a35);color:inherit;font:inherit}
+.sched-editor-copy label,.sched-editor-row-actions label{flex-direction:row;align-items:center}
+.sched-editor-status{min-height:1.4em;font-size:13px;white-space:normal;overflow-wrap:anywhere}
+.sched-copy-text{width:100%;min-height:320px;white-space:pre;resize:vertical;user-select:text}
+.schedule-value-tooltip{white-space:normal;overflow-wrap:anywhere;font-family:inherit;line-height:1.4;max-width:min(420px,calc(100vw - 20px))}
+@container (max-width:650px){
+  .sched-selected .sched-top-left .sched-top-ico,.sched-selected .sched-control-label{display:none}
+  .sched-selected .sched-topcard{padding:8px;gap:6px}
+  .sched-selected .sched-top-right{margin-left:auto}
+  .sched-selected .sched-person-actions .btn{font-size:10px;padding:5px 7px}
+  .sched-selected .sched-grid-head{display:none}
+  .sched-selected .sched-grid-row{grid-template-columns:minmax(0,1.1fr) minmax(0,1.6fr) minmax(0,1.4fr) minmax(0,.55fr);gap:3px 7px;padding:7px 8px;font-size:11px;align-items:start}
+  .sched-selected .sched-cell-period{grid-column:1;grid-row:1}
+  .sched-selected .sched-cell-time{grid-column:1 / 3;grid-row:2;font-size:10px}
+  .sched-selected .sched-cell-duration{grid-column:4;grid-row:2;font-size:9px}
+  .sched-selected .sched-cell-class{grid-column:2 / 4;grid-row:1}
+  .sched-selected .sched-cell-teacher{grid-column:3;grid-row:2;font-size:10px}
+  .sched-selected .sched-cell-room{grid-column:4;grid-row:1;text-align:right}
+  .sched-selected .sched-cell-empty{grid-column:1 / -1;grid-row:auto}
+}
+@media(max-width:600px){
+  .sched-editor-fields{grid-template-columns:1fr}
+  .sched-page.sched-selected{padding:8px}
+  .sched-selected .sched-topcard{align-items:flex-start}
+  .sched-selected .sched-top-right{justify-content:flex-start}
+  .sched-selected .sched-person-view{padding:7px}
+  .sched-selected .sched-view-head{gap:6px}
+}

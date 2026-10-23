@@ -1,0 +1,260 @@
+/* Load after the app styles. Custom height never applies to the expanded panel. */
+.call-menu:not(.is-expanded)[data-call-resized="true"] > .call-menu-card {
+  height: var(--call-panel-height);
+}
+body[data-mobile-ui="1"] #call-menu:not(.is-expanded)[data-call-resized="true"] > .call-menu-card {
+  height:var(--call-panel-height) !important;
+  max-height:none;
+  min-height:0;
+}
+
+.call-menu .call-menu-list:not(.is-focused):not(.is-multiview) {
+  overflow: auto;
+  display: flex;
+  align-items: safe center;
+  justify-content: center;
+}
+
+/* Fit every tile in both dimensions. Natural sizes are capped by the fitter;
+   extra space around a small call never turns a portrait into a giant tile. */
+.call-menu .call-menu-list:not(.is-focused) .call-stage.call-roster-grid[data-call-fit="true"] {
+  display: grid;
+  flex: none;
+  grid-template-columns: repeat(var(--call-fit-columns), var(--call-fit-track-width));
+  grid-auto-rows: var(--call-fit-tile-height);
+  gap: 12px;
+  width: var(--call-fit-width);
+  max-width: none;
+  height: var(--call-fit-height);
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  align-content: center;
+}
+
+.call-menu .call-roster-grid[data-call-fit="true"] > .call-stage-tile {
+  grid-column: auto / span 2;
+  width: var(--call-fit-tile-width);
+  max-width: none;
+  height: var(--call-fit-tile-height);
+  min-height: 0;
+  aspect-ratio: auto;
+  border-radius: 12px;
+}
+
+.call-menu .call-roster-grid[data-call-fit="true"] .call-participant { gap: 9px; padding: 8px; border: 0; background: transparent; box-shadow: none; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-user-avatar { width: 88px; height: 88px; border-width: 3px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-participant-name { font-size: 12px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-participant-state { width: 22px; height: 22px; border-width: 2px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-participant-state svg { width: 12px; height: 12px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-share-avatar { width: 58px; height: 58px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-share-art { width: 20px; height: 20px; border-radius: 0; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-share-art svg { width: 19px; height: 19px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-share-name { font-size: 11px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-share-overlay { gap: 6px; padding: 9px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-share-multi { min-height: 31px; font-size: 11px; border-radius: 9px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-share-multi { width: 31px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-view-head { min-height: 36px; padding: 4px 5px 4px 9px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-view-title { font-size: 11px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-view-action { width: 28px; height: 28px; border-radius: 8px; }
+.call-menu .call-roster-grid[data-call-fit="true"] .call-view-action svg { width: 15px; height: 15px; }
+
+/* Keep the controls usable while reserving more of a short card for the roster. */
+.call-menu[data-call-compact="true"] .call-menu-head { min-height: 40px; padding: 4px 8px; }
+.call-menu[data-call-compact="true"] .call-menu-head-main { gap: 1px; }
+.call-menu[data-call-compact="true"] .call-menu-title { font-size: 12px; }
+.call-menu[data-call-compact="true"] .call-menu-meta { font-size: 9px; }
+.call-menu[data-call-compact="true"] .call-menu-foot { padding: 4px 8px; }
+.call-menu[data-call-compact="true"] .call-control { width: 36px; height: 34px; border-radius: 9px; }
+.call-menu[data-call-compact="true"] .call-control-leave { width: 44px; }
+.call-menu[data-call-compact="true"] .call-control-icon svg { width: 18px; height: 18px; }
+.call-menu[data-call-compact="true"] .call-menu-list:not(.is-focused) { padding: 6px; }
+
+/* The call is one surface, with portraits directly on its background. */
+#call-menu {
+  padding: 0 0 12px;
+  background: #17202a;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ui-border);
+}
+#call-menu.is-expanded { padding: 0; }
+#call-menu > .call-menu-card {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+#call-menu .call-menu-head {
+  background: transparent;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+/* A screen click toggles every focused-screen control together. */
+#call-menu .call-menu-card:has(.call-menu-list.is-focused) { grid-template-rows: minmax(0, 1fr); }
+#call-menu .call-menu-card:has(.call-menu-list.is-focused) > .call-menu-head,
+#call-menu .call-menu-card:has(.call-menu-list.is-focused) > .call-menu-foot,
+#call-menu .call-menu-list.is-focused .call-view-head { display: none; }
+#call-menu.is-focus-controls-visible .call-menu-card:has(.call-menu-list.is-focused) { grid-template-rows: auto minmax(0, 1fr) auto; }
+#call-menu.is-focus-controls-visible .call-menu-card:has(.call-menu-list.is-focused) > .call-menu-head,
+#call-menu.is-focus-controls-visible .call-menu-list.is-focused .call-view-head { display: flex; }
+#call-menu.is-focus-controls-visible .call-menu-card:has(.call-menu-list.is-focused) > .call-menu-foot { display: grid; }
+#call-menu .call-menu-room { color: #e5edf6; font-weight: 700; }
+#call-menu .call-menu-list:not(.is-focused):not(.is-multiview) { overflow:auto; }
+#call-menu .call-roster-grid .call-participant,
+#call-menu .call-roster-grid .call-participant:hover {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  min-height: 0;
+}
+#call-menu .call-roster-grid[data-call-fit="true"] .call-user-avatar {
+  width: 88px;
+  height: 88px;
+  border-width: 3px;
+}
+#call-menu .call-roster-grid[data-call-fit="true"] .call-participant-name {
+  font-size: 12px;
+  color: #c2cedc;
+}
+#call-menu .call-menu-chat {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 10px;
+  background: #202a35;
+  color: #a9b7c5;
+}
+#call-menu .call-menu-chat:hover { background: #2a3745; color: #edf4fb; }
+#call-menu .call-menu-chat[aria-pressed="true"] { color: #d9ebff; background: #305171; border-color: #548bc0; }
+#call-menu.is-expanded .call-menu-chat { width: 42px; height: 42px; flex-basis: 42px; border-radius: 12px; }
+#call-menu.is-expanded .call-menu-chat svg { width: 21px; height: 21px; }
+#call-menu .call-menu-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  background: transparent;
+  border: 0;
+}
+#call-menu .call-menu-controls { grid-column: 2; grid-row: 2; }
+#call-menu .call-audio-actions { grid-column: 1 / -1; grid-row: 1; }
+.call-menu-connection {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-inline-end: 10px;
+  color: #92a5b7;
+  font-size: 11px;
+}
+#call-menu .call-menu-status { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: inherit; }
+#call-menu .call-menu-live-dot { width: 7px; height: 7px; flex: 0 0 7px; }
+@container call-panel (max-width: 520px) {
+  #call-menu .call-menu-connection { justify-content: center; padding: 0; }
+  #call-menu .call-menu-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  #call-menu .call-menu-room { max-width: calc(100cqi - 148px); }
+}
+
+.call-panel-resize-handle {
+  position: absolute;
+  z-index: 3;
+  inset-inline: 10px;
+  bottom: 0;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ns-resize;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  border-radius: 6px;
+  outline: none;
+}
+
+.call-panel-resize-handle::before {
+  content: "";
+  width: 44px;
+  height: 3px;
+  border-radius: 3px;
+  background: #586b80;
+  opacity: .55;
+  transition: opacity 120ms ease, background-color 120ms ease;
+}
+
+.call-panel-resize-handle:hover::before,
+.call-panel-resize-handle:focus-visible::before,
+.call-menu[data-call-resizing="true"] > .call-panel-resize-handle::before {
+  opacity: 1;
+  background: #a8c9ec;
+}
+
+.call-panel-resize-handle:focus-visible {
+  outline: 2px solid #8bbbec;
+  outline-offset: -2px;
+}
+
+.call-panel-resize-handle[hidden],
+.call-menu.is-expanded > .call-panel-resize-handle {
+  display: none;
+}
+
+body[data-call-panel-resizing="true"],
+body[data-call-panel-resizing="true"] * {
+  cursor: ns-resize !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* Prevent pre-existing animation rules from adding lag behind the pointer. */
+.call-menu[data-call-resizing="true"] > .call-menu-card {
+  transition: none;
+}
+
+/* Small pointer targets are difficult to catch with a finger. */
+@media (pointer: coarse) {
+  #call-menu:not(.is-expanded) { padding-bottom: 20px; }
+  .call-panel-resize-handle { height: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .call-panel-resize-handle::before { transition: none; }
+}
+
+/* Nonparticipant room preview: the roster remains live until the call ends. */
+#call-menu.is-preview > .call-menu-card {
+  height: 210px !important;
+  min-height: 0;
+}
+#call-menu.is-preview .call-menu-head { min-height: 38px; padding-block: 5px; }
+#call-menu.is-preview .call-menu-list { padding-block: 4px; }
+#call-menu.is-preview .call-menu-controls > :not(.call-control-join),
+#call-menu.is-preview .call-menu-expand,
+#call-menu.is-preview .call-menu-chat,
+#call-menu.is-preview .call-menu-connection,
+#call-menu.is-preview .call-audio-actions,
+#call-menu.is-preview .call-panel-resize-handle { display: none !important; }
+body #call-menu .call-in-call {
+  position: absolute;
+  right: 12px;
+  bottom: 9px;
+  z-index: 12;
+  cursor: default;
+}
+body #call-menu.is-expanded .call-in-call { right: 16px; bottom: 14px; }
+body #call-menu .call-in-call[hidden] { display: none !important; }
+/* Hidden multi-view chrome always gives the existing media cells more room. */
+body #call-menu:not(.is-focus-controls-visible) .call-menu-list.is-multiview { padding:0; }
+body #call-menu:not(.is-focus-controls-visible) .call-menu-list.is-multiview .call-stage-multi { gap:4px; }
+/* Portal sits above the expanded call and companion-chat panel (99999). */
+.call-viewers-floating { z-index: 100050; }
+@container call-panel (max-width: 520px) {
+  #call-menu.is-focus-controls-visible .call-menu-foot { padding-right: 56px; }
+  body #call-menu .call-in-call { right: 5px; }
+}

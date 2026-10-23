@@ -1,0 +1,20 @@
+[
+  "policy.js",
+  "connectivity.js",
+  "media-policy.js",
+  "state.js",
+  "playback.js",
+  "microphone.js",
+  "screen-share.js",
+  "viewers.js",
+  "quality.js",
+  "signaling.js",
+  "peers.js",
+  "presence.js",
+  "panel.js",
+  "../js/calling/desktop-overlay.js",
+  "audio-settings.js",
+  "../js/calling/notification-sounds.js",
+  "lifecycle.js",
+  "../js/calling/ringing.js"
+]

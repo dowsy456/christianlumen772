@@ -1,0 +1,10 @@
+.calendar-page .calendar-editor-meta{min-width:0;max-width:75%;font-family:var(--font-ui)}
+.calendar-page .calendar-author-button{display:inline-flex;align-items:center;gap:8px;max-width:100%;padding:3px 5px;border:0;border-radius:8px;background:transparent;color:#a8bfd1;font:inherit;text-align:left;cursor:pointer}
+.calendar-page .calendar-author-button:hover:not(:disabled){background:rgba(150,183,210,.09);color:#e3edf5}
+.calendar-page .calendar-author-button:disabled{cursor:default;opacity:1}
+.calendar-page .calendar-author-button:focus-visible{outline:2px solid #9bc5e4;outline-offset:2px}
+.calendar-page .calendar-author-avatar{display:block;position:relative;flex:0 0 30px;width:30px;height:30px;border-radius:50%;overflow:hidden;background:#22313e}
+.calendar-page .calendar-author-avatar img{position:absolute;left:50%;top:50%;display:block;width:100%;height:100%;min-width:0;max-width:none;object-fit:contain;object-position:center;transform-origin:center center}
+.calendar-page .calendar-author-label{min-width:0;font-size:11px;line-height:1.4;overflow-wrap:anywhere}
+.calendar-page .calendar-author-username{color:#cbdce8;font-weight:650}
+@media(max-width:620px){.calendar-page .calendar-author-avatar{flex-basis:28px;width:28px;height:28px}.calendar-page .calendar-author-label{font-size:10px}}

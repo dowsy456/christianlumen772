@@ -1,0 +1,19 @@
+/* Shared menu motion and avatar crop geometry, including touch devices. */
+#sticker-context-menu[hidden]{display:none !important}
+#sticker-context-menu.closing{pointer-events:none}
+.sticker-picker-menu{min-width:174px}
+.sticker-tile{touch-action:pan-y;-webkit-touch-callout:none}
+.sticker-tile:focus-visible{outline:2px solid var(--primary,#6ca7de);outline-offset:3px}
+.sticker-tile-media{overflow:hidden}
+.sticker-editor-gif .sticker-editor-canvas,.sticker-editor-gif .sticker-editor-drag-hint,.sticker-editor-gif .sticker-editor-field:has(#sticker-zoom){display:none}
+.sticker-editor-gif-preview{width:100%;height:100%;object-fit:contain;display:block}
+.sticker-tile-media img,.sticker-tile-media video{animation:stickerReveal 180ms ease-out both}
+/* Stored pan/zoom values were composed over a contained, square image frame.
+   Cover applied an extra crop to non-square uploads before that transform. */
+.sticker-viewer-uploader-avatar img{object-fit:contain;object-position:center;transform-origin:center;pointer-events:none}
+@keyframes stickerReveal{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){
+  .sticker-tile-media img,.sticker-tile-media video{animation:none}
+  #sticker-context-menu.open{animation:none;opacity:1;transform:none}
+  #sticker-context-menu.closing{animation:none;opacity:0;transform:none}
+}

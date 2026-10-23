@@ -1,0 +1,87 @@
+{
+  "targetLUFS": -18,
+  "truePeakCeilingDBTP": -4,
+  "tailThresholdDBFS": -55,
+  "sounds": [
+    {
+      "file": "Message.mp3",
+      "originalSeconds": 1.5412,
+      "trimmedSeconds": 0.3654,
+      "removedTailSeconds": 1.1758,
+      "integratedLUFS": -18.25,
+      "truePeakDBTP": -6.08
+    },
+    {
+      "file": "Ping.mp3",
+      "originalSeconds": 2.7429,
+      "trimmedSeconds": 0.9791,
+      "removedTailSeconds": 1.7637,
+      "integratedLUFS": -18.2,
+      "truePeakDBTP": -5.59
+    },
+    {
+      "file": "Ringing.mp3",
+      "originalSeconds": 6.0084,
+      "trimmedSeconds": 6.0084,
+      "removedTailSeconds": 0.0,
+      "integratedLUFS": -18.26,
+      "truePeakDBTP": -8.12
+    },
+    {
+      "file": "Called.mp3",
+      "originalSeconds": 4.7966,
+      "trimmedSeconds": 4.7966,
+      "removedTailSeconds": 0.0,
+      "integratedLUFS": -18.27,
+      "truePeakDBTP": -9.11
+    },
+    {
+      "file": "JoinCall.mp3",
+      "originalSeconds": 0.9923,
+      "trimmedSeconds": 0.9923,
+      "removedTailSeconds": 0.0,
+      "integratedLUFS": -18.23,
+      "truePeakDBTP": -7.22
+    },
+    {
+      "file": "LeaveCall.mp3",
+      "originalSeconds": 0.9861,
+      "trimmedSeconds": 0.9861,
+      "removedTailSeconds": 0.0,
+      "integratedLUFS": -18.25,
+      "truePeakDBTP": -7.39
+    },
+    {
+      "file": "StartScreen.mp3",
+      "originalSeconds": 0.3048,
+      "trimmedSeconds": 0.3048,
+      "removedTailSeconds": 0.0,
+      "integratedLUFS": -18.27,
+      "truePeakDBTP": -5.64
+    },
+    {
+      "file": "EndScreen.mp3",
+      "originalSeconds": 0.3128,
+      "trimmedSeconds": 0.3128,
+      "removedTailSeconds": 0.0,
+      "integratedLUFS": -18.25,
+      "truePeakDBTP": -5.03
+    },
+    {
+      "file": "StartWatching.mp3",
+      "originalSeconds": 2.4555,
+      "trimmedSeconds": 0.9481,
+      "removedTailSeconds": 1.5074,
+      "integratedLUFS": -18.27,
+      "truePeakDBTP": -7.82
+    },
+    {
+      "file": "StopWatching.mp3",
+      "originalSeconds": 2.3771,
+      "trimmedSeconds": 0.9216,
+      "removedTailSeconds": 1.4555,
+      "integratedLUFS": -18.23,
+      "truePeakDBTP": -5.87
+    }
+  ]
+}
