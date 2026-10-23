@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<!-- Room activities revision: Merge Party physics-first revamp v4 and Bopl Royale v24. -->
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="chatapp-launcher" content="modular-v1">
+  <script>
+    // A failed cross-origin stylesheet can still expose an empty CSSStyleSheet.
+    // Record its load error so the SVG can report an incomplete upload reliably.
+    window.ChatAppStylesheetErrors = [];
+    window.addEventListener("error", function (event) {
+      const link = event.target;
+      if (link && link.tagName === "LINK" && link.rel === "stylesheet") {
+        window.ChatAppStylesheetErrors.push(link.getAttribute("href"));
+      }
+    }, true);
+  </script>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+  <meta name="theme-color" content="#11171e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>GradeSort | Grade Sorter, Study Helper</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//www.gstatic.com">
+  <link rel="preconnect" href="https://chatappv6-e9da9-default-rtdb.firebaseio.com" crossorigin>
+  <link rel="dns-prefetch" href="//chatappv6-e9da9-default-rtdb.firebaseio.com">
+  <script defer src="./js/ui/theme.js?v=20261023-file-upload-limit"></script>
+  <link rel="stylesheet" href="./styles.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/toasts.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/chat.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/messages-and-composer.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/calling.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/navigation.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/modals.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/schedules.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/audio-player.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/activities-and-tools.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/settings.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/theme.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/workspace-layout.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/call-layout.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/navigation-layout.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/overlays-layout.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/tool-layout.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/media-and-stickers.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/call-panel-resize.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/sidebar-refresh.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/people-settings-refresh.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/sticker-refresh.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/read-receipts.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/activity-mode.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/chat-popovers.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/media-fixes.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/calendar.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/calendar-authors.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/calendar-date-picker.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/notification-status.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/spotify.css?v=20261023-file-upload-limit">
+<link rel="stylesheet" href="./css/menu-groups.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/mobile.css?v=20261023-file-upload-limit">
+  <link rel="stylesheet" href="./css/mobile-layout.css?v=20261023-file-upload-limit">
+</head>
+<body data-sidebar-position="left">
+<script>
+  // Apply the saved side before the first app paint; new installs start left.
+  try {
+    document.body.dataset.sidebarPosition = String(localStorage.getItem("chatapp_sidebar_position") || "").toLowerCase() === "right" ? "right" : "left";
+  } catch (_) {}
+</script>
+<script defer src="./js/ui/cloak.js?v=20261023-file-upload-limit"></script>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo-dot"></div>
+        <div class="brand-text">
+          <div class="brand-title">GradeSort</div>
+          <div class="brand-subtitle">Grade sorter &amp; study helper</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="card">
+      <!-- HOME (logged out) -->
+      <div class="view" id="view-home" data-active="true">
+        <h1 class="h1">GradeSort Study Hub</h1>
+        <p class="muted">A <b>grade sorter</b> &amp; <b>grade helper</b> that organizes assignments, highlights what matters, and keeps your targets on track.</p>
+
+        <div class="edu-hero">
+          <div class="edu-kpis" role="group" aria-label="Example grade insights">
+            <div class="edu-kpi">
+              <div class="edu-kpi-label">Current Average</div>
+              <div class="edu-kpi-val">92%</div>
+              <div class="edu-kpi-sub">Example dashboard</div>
+            </div>
+            <div class="edu-kpi">
+              <div class="edu-kpi-label">Assignments Due</div>
+              <div class="edu-kpi-val">3</div>
+              <div class="edu-kpi-sub">Next 7 days, example</div>
+            </div>
+            <div class="edu-kpi">
+              <div class="edu-kpi-label">Target Grade</div>
+              <div class="edu-kpi-val">A</div>
+              <div class="edu-kpi-sub">Goal tracker</div>
+            </div>
+          </div>
+
+          <div class="edu-sorter" role="group" aria-label="Quick Grade Sorter preview">
+            <div class="edu-sorter-head">
+              <div class="edu-sorter-title">Quick Grade Sorter</div>
+              <span class="edu-badge">Preview</span>
+            </div>
+
+            <div class="edu-sorter-row">
+              <span class="edu-sorter-name">Homework</span>
+              <div class="edu-bar"><i style="--w:78%"></i></div>
+              <span class="edu-sorter-val">78%</span>
+            </div>
+            <div class="edu-sorter-row">
+              <span class="edu-sorter-name">Quizzes</span>
+              <div class="edu-bar"><i style="--w:91%"></i></div>
+              <span class="edu-sorter-val">91%</span>
+            </div>
+            <div class="edu-sorter-row">
+              <span class="edu-sorter-name">Tests</span>
+              <div class="edu-bar"><i style="--w:88%"></i></div>
+              <span class="edu-sorter-val">88%</span>
+            </div>
+
+            <div class="muted small edu-sorter-note">Note: Your real classes load after you sign in.</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn primary" id="btn-go-create" type="button">Create Study Workspace</button>
+          <button class="btn" id="btn-go-login" type="button">Enter Password</button>
+        </div>
+
+        <div class="footnote">
+          <span class="pill">Built for students</span>
+          <span class="pill">Grade sorter + grade helper</span>
+          <span class="pill">Password Login</span>
+        </div>
+      </div>
+
+      <!-- CREATE -->
+      <div class="view" id="view-create" data-active="false">
+        <div class="view-head">
+          <button class="icon-btn" id="btn-back-from-create" type="button" aria-label="Back">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+              <path d="M14.5 6.5 9 12l5.5 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div>
+            <div class="h2">Create Study Workspace</div>
+            <div class="muted small">Choose a username (max 20)</div>
+          </div>
+        </div>
+
+        <div class="form">
+          <label class="label" for="create-username">Username</label>
+          <input class="input" id="create-username" type="text" maxlength="20" autocomplete="off" placeholder="Your username">
+
+          <div class="row split">
+            <div>
+              <label class="label">Classroom Avatar</label>
+              <div class="upload create-avatar-upload">
+                <input id="create-pfp" type="file" accept="image/png,image/jpeg,image/jpg,image/gif" hidden>
+                <div class="upload-ui">
+                  <div class="upload-left">
+                    <div class="avatar-wrap">
+                      <div class="avatar-ring">
+                        <div class="avatar-clip" id="pfp-clip">
+                          <img id="pfp-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Profile Picture" draggable="false">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="upload-text">
+                      <div class="strong">Profile picture</div>
+                      <div class="muted small">Choose a PNG, JPG, or GIF, or keep the default icon.</div>
+                    </div>
+                  </div>
+
+                  <div class="upload-actions-stack">
+                    <div class="upload-actions-row">
+                      <button class="btn tiny" id="btn-create-choose-pfp" type="button">Choose</button>
+                      <button class="btn tiny" id="btn-create-use-default" type="button">Use Default</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="crop-controls" id="crop-controls" hidden>
+                <div class="row">
+                  <div class="muted small">Drag your avatar inside the badge.</div>
+                </div>
+                <div class="row">
+                  <label class="label small" for="zoom">Zoom</label>
+                  <input id="zoom" type="range" min="1.0" max="3.0" step="0.01" value="1.0">
+                </div>
+                <div class="row">
+                  <button class="btn tiny" id="btn-center" type="button">Center</button>
+                  <button class="btn tiny" id="btn-reset" type="button">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="error" id="create-error" hidden></div>
+
+          <div class="btn-row">
+            <button class="btn primary" id="btn-create-account" type="button">Create</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="view" id="view-login" data-active="false">
+        <div class="view-head">
+          <button class="icon-btn" id="btn-back-from-login" type="button" aria-label="Back">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+              <path d="M14.5 6.5 9 12l5.5 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div>
+            <div class="h2">Open Your Dashboard</div>
+            <div class="muted small">Enter your password.</div>
+          </div>
+        </div>
+
+        <div class="form">
+          <label class="label">Password</label>
+          <div class="input-wrap">
+            <input class="input" id="login-code" type="password" maxlength="20" autocomplete="off" spellcheck="false" placeholder="Your password">
+            <button class="icon-btn eye" id="btn-toggle-eye" type="button" aria-label="Show / hide">
+              <span id="eye-icon"></span>
+            </button>
+          </div>
+
+          <div class="error" id="login-error" hidden></div>
+
+          <div class="btn-row">
+            <button class="btn primary" id="btn-login" type="button">Open Dashboard</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAT (logged in) -->
+      <div class="view" id="view-chat" data-active="false">
+        <div class="chat-shell">
+          <section class="call-menu" id="call-menu" hidden aria-label="Room call">
+            <div class="call-menu-card">
+              <div class="call-menu-head">
+                <div class="call-menu-head-main">
+                  <div class="call-menu-title"><span class="call-menu-room" id="call-menu-room">Room</span></div>
+                  <div class="call-menu-meta">
+                    <span id="call-menu-meta">Connecting…</span>
+                  </div>
+                </div>
+                <div class="call-menu-head-actions">
+                  <button class="icon-btn call-menu-chat" id="btn-call-menu-chat" type="button" aria-label="Show Chat" data-tooltip="Show Chat" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-6 3V6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7 9h10M7 13h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  </button>
+                  <button class="icon-btn call-menu-expand" id="btn-call-menu-expand" type="button" aria-label="Expand Call Menu" data-tooltip="Expand Call Menu">
+                    <svg class="call-expand-enter" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                      <path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <svg class="call-expand-exit" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                      <path d="M9 9H4M9 9V4M15 9h5M15 9V4M9 15H4M9 15v5M15 15h5M15 15v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="call-menu-list" id="call-menu-list" aria-live="polite"></div>
+
+              <div class="call-menu-foot">
+                <div class="call-menu-connection" role="status" aria-live="polite">
+                  <span class="call-menu-live-dot idle" id="call-menu-quality-dot" aria-hidden="true"></span>
+                  <span class="call-menu-status" id="call-menu-status">Connecting…</span>
+                </div>
+                <div class="call-audio-actions" aria-live="polite">
+                  <button class="call-audio-action call-audio-resume" id="btn-call-audio-resume" type="button" hidden>
+                    Tap to hear call
+                  </button>
+                  <button class="call-audio-action call-audio-output" id="btn-call-audio-output" type="button" hidden>
+                    Choose speaker
+                  </button>
+                </div>
+                <div class="call-menu-controls" role="group" aria-label="Call controls">
+                  <button class="call-control call-control-join" id="btn-call-join" type="button" aria-label="Join Call" data-tooltip="Join Call" hidden>
+                    <span class="call-control-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.79a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.58 2.79.7A2 2 0 0 1 22 16.92Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                  </button>
+                  <div class="call-control-split" role="group" aria-label="Input Settings">
+                  <button class="call-control" id="btn-call-mute" type="button" aria-label="Mute" data-call-audio-context="input" data-tooltip="Mute">
+                    <span class="call-control-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M12 14.5a3.5 3.5 0 0 0 3.5-3.5V7a3.5 3.5 0 0 0-7 0v4a3.5 3.5 0 0 0 3.5 3.5Z" stroke="currentColor" stroke-width="2"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </span>
+                  </button>
+                  <button class="call-control call-settings-toggle" id="btn-call-input-settings" type="button" aria-label="Input Settings" data-tooltip="Input Settings" data-call-audio-settings="input" aria-haspopup="dialog" aria-expanded="false" aria-controls="call-input-settings-menu"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 9.5 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  </div>
+                  <div class="call-control-split" role="group" aria-label="Output Settings">
+                  <button class="call-control" id="btn-call-deafen" type="button" aria-label="Deafen" data-call-audio-context="output" data-tooltip="Deafen">
+                    <span class="call-control-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M4 13v-1a8 8 0 0 1 16 0v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 13.5A2.5 2.5 0 0 1 6.5 11H8v8H6.5A2.5 2.5 0 0 1 4 16.5v-3ZM20 13.5a2.5 2.5 0 0 0-2.5-2.5H16v8h1.5a2.5 2.5 0 0 0 2.5-2.5v-3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                    </span>
+                  </button>
+                  <button class="call-control call-settings-toggle" id="btn-call-output-settings" type="button" aria-label="Output Settings" data-tooltip="Output Settings" data-call-audio-settings="output" aria-haspopup="dialog" aria-expanded="false" aria-controls="call-output-settings-menu"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 9.5 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  </div>
+                  <button class="call-control call-control-share" id="btn-call-share" type="button" aria-label="Share Screen" data-tooltip="Share Screen">
+                    <span class="call-control-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="3" stroke="currentColor" stroke-width="2"/><path d="M9 21h6M12 17v4M9 10l3-3 3 3M12 7v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                  </button>
+                  <button class="call-control call-control-camera" id="btn-call-camera" type="button" aria-label="Share Camera" data-tooltip="Share Camera" aria-pressed="false">
+                    <span class="call-control-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M8.5 6.5 10 4h4l1.5 2.5H19a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2h3.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" stroke="currentColor" stroke-width="2"/></svg>
+                    </span>
+                  </button>
+                  <button class="call-control call-control-overlay" id="btn-call-overlay" type="button" aria-label="Turn Off Call Overlay" data-tooltip="Call Overlay" aria-pressed="true" hidden>
+                    <span class="call-control-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="3" stroke="currentColor" stroke-width="2"/><path d="M9 21h6M12 18v3M10 8h6M10 11h6M10 14h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 8h.01M7 11h.01M7 14h.01" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </span>
+                  </button>
+                  <button class="call-control call-control-leave" id="btn-call-leave" type="button" aria-label="Leave Call" data-tooltip="Leave Call">
+                    <span class="call-control-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M5 14.5c4.2-2.7 9.8-2.7 14 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="m7 13-2.3 3.2M17 13l2.3 3.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <span class="call-control call-in-call" id="call-in-call" role="group" aria-label="In Call" hidden>
+                <span class="call-control-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="9.5" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M4 19v-.8A4.2 4.2 0 0 1 8.2 14h2.6a4.2 4.2 0 0 1 4.2 4.2v.8M15.4 5.3a3 3 0 0 1 0 5.4M17 14.3a4.2 4.2 0 0 1 3 4v.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+              </span>
+            </div>
+          </section>
+
+          <section class="chat-main">
+            <div class="mobile-nav-anchor">
+              <button class="icon-btn mobile-nav-toggle" id="btn-mobile-nav" type="button" aria-label="Open navigation" aria-expanded="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                  <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Messages -->
+            <div class="messages bg-host" id="messages">
+              <div class="messages-inner" id="messages-inner"></div>
+              <div class="room-empty-state" id="room-empty-state" hidden role="status" aria-live="polite">
+                <span class="room-empty-state-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 17.5 3.5 21l4.4-1.6c1.2.4 2.6.6 4.1.6 5 0 9-3.4 9-7.5S17 5 12 5s-9 3.4-9 7.5c0 1.9.8 3.6 2 5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12.5h8M8 9.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+                <strong>Be the first to start a conversation</strong>
+                <span>Send a message or share a file with the room.</span>
+              </div>
+            </div>
+
+            <!-- Overlays (Reply + Ping + Files) -->
+            <div class="chat-overlays" id="chat-overlays" aria-hidden="true">
+              <!-- Replying -->
+              <div class="reply-bar overlay-box reply-panel" id="reply-bar" hidden>
+                <div class="overlay-box-head">
+                  <div class="overlay-panel-title"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5-6 6 6 6M3 11h10a7 7 0 0 1 7 7v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Replying To</span></div>
+                  <button class="reply-bar-close overlay-close" id="reply-bar-close" type="button" aria-label="Cancel Reply"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
+                </div>
+                <div class="reply-card-main overlay-preview-row">
+                  <div class="reply-target-row">
+                    <div class="mini-avatar reply-target-avatar" id="reply-bar-avatar" aria-hidden="true"></div>
+                    <div class="reply-target-copy">
+                      <div class="reply-target-name" id="reply-bar-text"></div>
+                      <div class="reply-target-message" id="reply-bar-message">Original message will appear here.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pinging -->
+              <div class="files-bar ping-bar overlay-box" id="ping-bar" hidden>
+                <div class="files-bar-head overlay-box-head">
+                  <div class="overlay-panel-title"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M16 8v6a2 2 0 0 0 4 0v-2a8 8 0 1 0-3 6.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Ping Room Members</span></div>
+                  <div class="overlay-head-actions">
+                    <div class="overlay-hint" id="ping-bar-query">Type after @ to filter</div>
+                    <div class="overlay-status-pill" id="ping-bar-count">0 matches</div>
+                    <button class="reply-bar-close overlay-close" id="ping-bar-close" type="button" aria-label="Close Ping Box"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
+                  </div>
+                </div>
+                <div class="files-list ping-list" id="ping-list"></div>
+              </div>
+
+              <!-- Files -->
+              <div class="files-bar overlay-box attachment-panel" id="files-bar" hidden>
+                <div class="files-bar-head overlay-box-head">
+                  <div class="overlay-panel-title"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8 12 6-6a3 3 0 0 1 4.2 4.2l-8 8A5 5 0 0 1 3.1 11l8.3-8.2a2 2 0 0 1 2.8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Attachments</span></div>
+                  <div class="overlay-head-actions">
+                    <div class="overlay-status-pill" id="files-bar-limit" aria-live="polite" aria-label="0 of 12 files attached">0/12</div>
+                    <button class="reply-bar-close overlay-close" id="files-bar-close" type="button" aria-label="Clear Files"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
+                  </div>
+                </div>
+                <div class="files-list attachment-list" id="files-list"></div>
+              </div>
+            </div>
+
+            <div class="typing-bar" id="typing-bar" hidden aria-live="polite">
+              <div class="typing-bar-text">
+                <span class="typing-bar-suffix" aria-hidden="true"><span class="typing-bar-dot"></span><span class="typing-bar-dot"></span><span class="typing-bar-dot"></span></span>
+                <span class="typing-bar-users" id="typing-bar-users"></span>
+              </div>
+            </div>
+
+            <!-- Composer -->
+            <div class="composer" id="composer">
+              <div class="composer-row" id="composer-row">
+                <div class="composer-actions composer-actions--left">
+                  <button class="icon-btn composer-tool-btn" id="btn-upload" type="button" data-tooltip="Upload File" aria-label="Upload file">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                      <path d="m9.4 12.9 5.85-5.85a3.25 3.25 0 0 1 4.6 4.6l-7.2 7.2a5 5 0 0 1-7.07-7.07l7.28-7.28a2.75 2.75 0 0 1 3.89 3.89l-7.1 7.1a1.5 1.5 0 0 1-2.12-2.12l6.38-6.38" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="composer-input-wrap">
+                  <textarea class="composer-input" id="msg-input" placeholder="Type a message…" maxlength="200000" rows="1" aria-label="Message"></textarea>
+                </div>
+
+                <div class="composer-actions composer-actions--right">
+                  <div class="composer-actions-direct" id="composer-actions-direct">
+                    <button class="icon-btn composer-tool-btn" id="btn-emoji" type="button" data-tooltip="Emoji" aria-label="Choose an emoji">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M8.3 14.2c.9 1.25 2.15 1.85 3.7 1.85s2.8-.6 3.7-1.85" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9.2" cy="10" r="1.05" fill="currentColor"/><circle cx="14.8" cy="10" r="1.05" fill="currentColor"/></svg>
+                      <span class="composer-action-label">Emoji</span>
+                    </button>
+
+                    <button class="icon-btn composer-tool-btn" id="btn-stickers" type="button" data-tooltip="Stickers" aria-label="Open stickers" aria-controls="sticker-popover" aria-expanded="false" hidden>
+                      <span class="sticker-btn-glyph" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+                          <path d="M5.5 3.5h10.2a4.8 4.8 0 0 1 4.8 4.8v5.1a7.1 7.1 0 0 1-7.1 7.1H8.3a4.8 4.8 0 0 1-4.8-4.8V5.5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                          <path d="M13.5 20.5v-3.2a3.8 3.8 0 0 1 3.8-3.8h3.2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                          <circle cx="8.6" cy="9.2" r="1" fill="currentColor"/><circle cx="14.3" cy="9.2" r="1" fill="currentColor"/>
+                          <path d="M8.2 13c.85 1.05 1.95 1.55 3.3 1.55 1.25 0 2.3-.43 3.14-1.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                        </svg>
+                      </span>
+                      <span class="composer-action-label">Stickers</span>
+                    </button>
+
+                    <button class="icon-btn composer-tool-btn" id="btn-voice" type="button" data-tooltip="Voice Message" aria-label="Voice message" aria-controls="voice-popover" aria-expanded="false" hidden>
+                      <span class="voice-btn-glyph" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M6.8 10.8a5.2 5.2 0 0 0 10.4 0M12 16v4M9.2 20h5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                      <span class="composer-action-label">Voice Message</span>
+                    </button>
+
+                    <button class="icon-btn composer-tool-btn" id="btn-members" type="button" data-tooltip="Members" aria-label="Show members" aria-expanded="false">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="9.5" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M4 19v-.8A4.2 4.2 0 0 1 8.2 14h2.6a4.2 4.2 0 0 1 4.2 4.2v.8M15.4 5.3a3 3 0 0 1 0 5.4M17 14.3a4.2 4.2 0 0 1 3 4v.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                      <span class="composer-action-label">Members</span>
+                    </button>
+
+                    <button class="icon-btn composer-tool-btn" id="btn-activities" type="button" data-tooltip="Activities" aria-label="Open room activities">
+                      <span class="activities-btn-glyph" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3.5" width="6.5" height="6.5" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="3.5" y="14" width="6.5" height="6.5" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M17.25 14v6.5M14 17.25h6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                      <span class="composer-action-label">Activities</span>
+                    </button>
+                  </div>
+
+                  <button class="icon-btn composer-tool-btn composer-more-btn" id="btn-composer-more" type="button" data-tooltip="More Tools" aria-label="More composer tools" aria-haspopup="menu" aria-controls="composer-more-menu" aria-expanded="false" hidden>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>
+                  </button>
+
+                  <button class="btn primary" id="btn-send" type="button" aria-label="Send message" data-tooltip="Send Message"><span class="composer-send-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m21 3-6.5 18-4-7.5L3 9.5 21 3ZM21 3 10.5 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                </div>
+
+                <input id="file-input" type="file" multiple hidden>
+              </div>
+
+              <div class="composer-more-menu" id="composer-more-menu" role="menu" aria-label="More composer tools" hidden>
+                <div class="composer-more-actions" id="composer-more-actions"></div>
+              </div>
+
+              <div class="emoji-popover" id="emoji-popover" hidden>
+                <div class="emoji-popover-inner">
+                  <div id="emoji-picker" class="app-emoji-picker"></div>
+                </div>
+              </div>
+
+              <div class="sticker-popover" id="sticker-popover" role="dialog" aria-label="Stickers" hidden>
+                <div class="sticker-popover-head">
+                  <label class="sticker-search-wrap" aria-label="Search Stickers">
+                    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    <input id="sticker-search" type="search" maxlength="40" placeholder="Search stickers" autocomplete="off" />
+                  </label>
+                  <button class="sticker-upload-btn" id="btn-sticker-upload" type="button" data-tooltip="Create Sticker" aria-label="Create sticker from a photo or video">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M12 16V5M8 9l4-4 4 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 14v3.2A2.8 2.8 0 0 0 7.8 20h8.4a2.8 2.8 0 0 0 2.8-2.8V14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+                  </button>
+                  <input id="sticker-file-input" type="file" accept="image/*,video/*" hidden />
+                </div>
+                <div class="sticker-popover-status" id="sticker-popover-status" aria-live="polite"></div>
+                <div class="sticker-grid" id="sticker-grid"></div>
+                <div class="sticker-context-menu" id="sticker-context-menu" role="menu" hidden></div>
+              </div>
+
+              <div class="voice-popover" id="voice-popover" role="dialog" aria-label="Voice Message" hidden>
+                <div class="voice-popover-inner">
+                  <div class="voice-head">
+                    <div class="voice-head-main">
+                      <span class="voice-head-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M6.8 10.8a5.2 5.2 0 0 0 10.4 0M12 16v4M9.2 20h5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                      <span class="voice-head-copy"><span class="voice-title">Voice Message</span></span>
+                    </div>
+                    <button class="voice-close" id="btn-voice-close" type="button" aria-label="Close voice message menu"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+                  </div>
+                  <div class="voice-body">
+                    <div class="voice-preview-card">
+                      <div class="voice-preview-top">
+                        <div class="voice-preview-left">
+                          <div class="voice-preview-dot" aria-hidden="true"></div>
+                          <div class="voice-preview-time" id="voice-preview-time">0:00</div>
+                        </div>
+                        <div class="voice-preview-status" id="voice-state-text" aria-live="polite">Ready to record</div>
+                      </div>
+                      <div class="voice-waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                      <div class="voice-preview-player" id="voice-preview-player" hidden>
+                        <button class="voice-preview-play" id="btn-voice-preview-play" type="button" aria-label="Play voice preview"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 7.5v9l7-4.5-7-4.5Z" fill="currentColor"/></svg></button>
+                        <input class="voice-preview-seek" id="voice-preview-seek" type="range" min="0" max="0" step="0.01" value="0" aria-label="Voice preview position">
+                        <span class="voice-preview-duration" id="voice-preview-duration">0:00 / 0:00</span>
+                      </div>
+                      <audio class="voice-preview-audio" id="voice-preview-audio" playsinline preload="metadata" hidden></audio>
+                    </div>
+
+                    <div class="voice-actions-row">
+                      <button class="voice-btn" id="btn-voice-start" type="button">Start Recording</button>
+                      <button class="voice-btn secondary" id="btn-voice-upload" type="button">Upload Audio</button>
+                      <button class="voice-btn" id="btn-voice-stop" type="button" hidden>Stop</button>
+                      <button class="voice-btn secondary" id="btn-voice-pause" type="button" hidden>Pause</button>
+                      <button class="voice-btn ghost" id="btn-voice-clear" type="button" hidden>Discard</button>
+                    </div>
+
+                    <div class="voice-foot">
+                      <span id="voice-count">0/12</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="sidebar members-sidebar bg-host" id="members-sidebar" aria-label="Room members" hidden>
+            <div class="side-scroll scrollbar-chatlike">
+              <div class="online-pill" id="online-pill" hidden>
+                <div class="online-label" id="online-label">Members - 0</div>
+                <section class="online-list" id="online-list" aria-label="Members list"></section>
+              </div>
+              <div id="members-sidebar-mount"></div>
+            </div>
+          </aside>
+          <button class="mobile-drawer-scrim" id="mobile-drawer-scrim" type="button" aria-label="Close navigation and members panels" tabindex="-1"></button>
+
+          <aside class="sidebar bg-host" aria-label="App navigation">
+            <div class="side-scroll scrollbar-chatlike" id="side-scroll">
+              <div class="sidebar-workspace-head">
+              </div>
+
+              <nav class="sidebar-nav sidebar-nav-primary" aria-label="Workspace navigation">
+                <button class="side-btn" id="btn-side-home" type="button" aria-label="Home">
+                  <span class="side-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M3 10.8 12 3l9 7.8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M5.2 9.7V21h13.6V9.7" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+                      <path d="M9.2 21v-6.2h5.6V21" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="side-label">Home</span>
+                </button>
+
+                <button class="side-btn side-menu-btn" id="btn-side-settings" type="button" aria-label="Settings">
+                  <span class="side-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" stroke="currentColor" stroke-width="2"/>
+                      <path d="M19.4 13.4c.08-.46.12-.93.12-1.4s-.04-.94-.12-1.4l2.05-1.6-2-3.46-2.56 1.03a8.1 8.1 0 0 0-2.42-1.4L14.08 2h-4.16l-.39 3.17a8.1 8.1 0 0 0-2.42 1.4L4.55 5.54l-2 3.46 2.05 1.6c-.08.46-.12.93-.12 1.4s.04.94.12 1.4L2.55 15l2 3.46 2.56-1.03a8.1 8.1 0 0 0 2.42 1.4l.39 3.17h4.16l.39-3.17a8.1 8.1 0 0 0 2.42-1.4l2.56 1.03 2-3.46-2.05-1.6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="side-label">Settings</span>
+                </button>
+
+                <button class="side-btn side-menu-btn" id="btn-side-panel" type="button" aria-label="Admin Tools" hidden>
+                  <span class="side-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                      <path d="M12 12.2a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4z" stroke="currentColor" stroke-width="2"/>
+                      <path d="M7.8 18.2c.9-2 2.5-3.2 4.2-3.2s3.3 1.2 4.2 3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  <span class="side-label">Admin Tools</span>
+                </button>
+
+                <button class="side-btn side-menu-btn" id="btn-side-call" type="button" aria-label="Call" hidden data-call-state="none">
+                  <span class="side-ico" aria-hidden="true">
+                    <svg class="call-ico call-ico-default call-ico-in" viewBox="0 0 24 24" fill="none">
+                      <path d="M7.2 4.1 9.6 7a1.7 1.7 0 0 1 .1 2l-1.2 1.7a15.1 15.1 0 0 0 4.8 4.8l1.7-1.2a1.7 1.7 0 0 1 2 .1l2.9 2.4a1.8 1.8 0 0 1 .5 2 3.2 3.2 0 0 1-3.1 2.1C9.4 20.4 3.6 14.6 3.1 6.7A3.2 3.2 0 0 1 5.2 3.6a1.8 1.8 0 0 1 2 .5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="side-label" id="call-label">Start Call</span>
+                </button>
+
+                <button class="side-btn side-menu-btn" id="btn-side-calendar" type="button" aria-label="Calendar">
+                  <span class="side-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" stroke-width="2"/>
+                      <path d="M7 3v4M17 3v4M3 10h18M7 14h2M12 14h2M7 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  <span class="side-label">Calendar</span>
+                </button>
+
+                <button class="side-btn side-menu-btn" id="btn-side-schedules" type="button" aria-label="Schedules">
+                  <span class="side-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M3 10.5 12 5l9 5.5-9 5.5-9-5.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                      <path d="M6.5 13v4.2c1.6 1.2 3.4 1.8 5.5 1.8s3.9-.6 5.5-1.8V13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                      <path d="M21 10.5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  <span class="side-label">Schedules</span>
+                </button>
+
+                <button class="side-btn rooms-add" id="btn-room-plus" type="button" aria-label="Create or join room">
+                  <span class="side-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  <span class="side-label">Rooms</span>
+                </button>
+              </nav>
+
+              <section class="rooms-block side-section" id="rooms-list-card" aria-label="Public Rooms">
+                <div class="rooms-head" id="rooms-head">
+                  <div class="rooms-head-copy">
+                    <div class="rooms-title" id="rooms-title">Public Rooms</div>
+                    <div class="rooms-subtitle" id="rooms-subtitle" hidden>Public rooms</div>
+                  </div>
+                  <div class="rooms-head-actions">
+                    <div class="rooms-mini" id="rooms-mini" aria-label="0 rooms">0</div>
+                    <button class="rooms-mode-toggle" id="rooms-mode-toggle" type="button" aria-label="Show All Rooms" data-tooltip="Show All Rooms" hidden>
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                        <path d="m7 9 5 5 5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="rooms-list" id="rooms-list"></div>
+              </section>
+
+              <nav class="sidebar-nav sidebar-tool-grid" aria-label="Tools">
+
+
+                <button class="side-btn side-menu-btn" id="btn-side-html-hub" type="button" aria-label="HTML Hub" data-mode="hub">
+                  <span class="side-ico" id="btn-side-html-hub-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path fill-rule="evenodd" d="M7.3 3.5h2.1l1.1 1h3l1.1-1h2.1c2.1 0 3.5 1.4 4 3.7l1.4 10.2c.5 3.2-2.1 4.6-4 2.3l-2.4-3H8.3l-2.4 3c-1.9 2.3-4.5.9-4-2.3L3.3 7.2c.5-2.3 1.9-3.7 4-3.7ZM6.5 8v2H4.5v2h2v2h2v-2h2v-2h-2V8h-2Zm11 1a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Zm-3 3a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Z" clip-rule="evenodd"/>
+                    </svg>
+                  </span>
+                  <span class="side-label">HTML Hub</span>
+                </button>
+
+                <button class="side-btn side-menu-btn" id="btn-side-notepad" type="button" aria-label="Notepad">
+                  <span class="side-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M7 3h9l4 4v14H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                      <path d="M15 3v5h5M8 12h8M8 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="side-label">Notepad</span>
+                </button>
+
+              <button class="rooms-block side-section time-display-card" id="btn-time-display" type="button" aria-label="Open Time Display">
+                <span class="time-display-rail-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="time-display-rail-label side-label">Time Display</span>
+                <span class="rooms-head">
+                  <span class="rooms-title">Time Display</span>
+                </span>
+                <span class="clock-body">
+                  <span class="clock-time" id="clock-time">—</span>
+                  <span class="muted small" id="clock-class" hidden></span>
+                  <span class="muted small" id="clock-timer" hidden></span>
+                </span>
+              </button>
+              </nav>
+
+              <section class="me-pill me-pill-dock" aria-label="Account">
+                <div class="mini-avatar" id="me-avatar"></div>
+                <div class="me-meta">
+                  <div class="me-name" id="me-name">—</div>
+                  <div class="me-code" id="me-code">—</div>
+                </div>
+              </section>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-inner">
+      <div class="toast-status-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Z" stroke="currentColor" stroke-width="2"/><path d="M12 8v4.5M12 16h.01" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="toast-left">
+        <div class="toast-title" id="toast-title">Notice</div>
+        <div class="toast-body" id="toast-body"></div>
+        <div class="toast-code" id="toast-code" hidden></div>
+      </div>
+      <div class="toast-right">
+        <button class="btn tiny" id="btn-copy-code" type="button" hidden>Copy</button>
+        <button class="icon-btn" id="btn-toast-close" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="toast-timer">
+        <div class="toast-timer-bar" id="toast-timer-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-subtitle">
+      <div class="modal-main">
+        <header class="modal-head">
+          <div class="modal-heading">
+            <div class="modal-title" id="modal-title">Modal</div>
+            <div class="modal-subtitle" id="modal-subtitle"></div>
+          </div>
+          <div class="modal-head-actions">
+            <button class="modal-close modal-supplemental-action" id="btn-time-display-chat" type="button" aria-label="Chat" data-tooltip="Chat" aria-pressed="false" aria-controls="view-chat" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M5 4h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H9l-5 3V5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8h8M8 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+            <button class="modal-close modal-supplemental-action time-display-expand" id="btn-time-display-expand" type="button" aria-label="Expand Time Display" data-tooltip="Expand Time Display" aria-pressed="false" hidden>
+              <svg class="time-display-expand-enter" viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="time-display-expand-exit" viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true"><path d="M9 9H4M9 9V4M15 9h5M15 9V4M9 15H4M9 15v5M15 15h5M15 15v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="modal-close modal-supplemental-action sticker-delete-action" id="btn-sticker-delete" type="button" aria-label="Delete Sticker" data-tooltip="Delete Sticker" hidden>
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true"><path d="M5 7h14M9 7V4.8h6V7M8 10v7M12 10v7M16 10v7M6.5 7l.7 13h9.6l.7-13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="modal-close modal-supplemental-action sticker-save-action" id="btn-sticker-save" type="button" aria-label="Save Sticker" data-tooltip="Save Sticker" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true"><path d="m12 3.6 2.55 5.17 5.7.83-4.12 4.02.97 5.68L12 16.62 6.9 19.3l.97-5.68L3.75 9.6l5.7-.83L12 3.6Z" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="modal-close modal-supplemental-action media-create-sticker-action" id="btn-media-create-sticker" type="button" aria-label="Create Sticker" data-tooltip="Create Sticker" hidden>
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true"><path d="M5.5 3.5h10.2a4.8 4.8 0 0 1 4.8 4.8v5.1a7.1 7.1 0 0 1-7.1 7.1H8.3a4.8 4.8 0 0 1-4.8-4.8V5.5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13.5 20.5v-3.2a3.8 3.8 0 0 1 3.8-3.8h3.2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8.6" cy="9.2" r="1" fill="currentColor"/><circle cx="14.3" cy="9.2" r="1" fill="currentColor"/><path d="M8.2 13c.85 1.05 1.95 1.55 3.3 1.55 1.25 0 2.3-.43 3.14-1.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </button>
+            <button class="modal-close" id="btn-modal-close" type="button" aria-label="Close Dialog" data-tooltip="Close Dialog">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.35" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="modal-body" id="modal-body"></div>
+        <footer class="modal-actions" id="modal-actions" hidden></footer>
+      </div>
+    </section>
+  </div>
+
+  <div class="msg-menu call-user-context-menu call-audio-settings-menu" id="call-input-settings-menu" role="dialog" aria-label="Input Settings" hidden>
+    <div class="call-audio-device-control">
+      <label for="call-input-device">Input Device</label>
+      <select id="call-input-device" aria-describedby="call-input-device-status"><option value="">System default</option></select>
+      <p class="call-audio-device-status" id="call-input-device-status" role="status" hidden></p>
+    </div>
+    <div class="call-user-volume-control">
+      <div class="call-user-volume-label"><label for="call-input-volume">Input Volume</label><output id="call-input-volume-value" for="call-input-volume">100%</output></div>
+      <input class="call-user-volume-slider" id="call-input-volume" type="range" min="0" max="100" step="1" value="100" aria-valuetext="100%" />
+      <div class="call-user-volume-scale" aria-hidden="true"><span>0%</span><span>100%</span></div>
+    </div>
+                  <button class="msg-menu-btn call-settings-refresh" id="btn-call-refreshmic" type="button" aria-label="Refresh Microphone" >
+                    <span class="call-control-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M12 14a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3Z" stroke="currentColor" stroke-width="2"/><path d="M6 11a6 6 0 0 0 10.4 4.1M12 17v4M9 21h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 6v4h-4M18 10a7 7 0 0 0-2.1-4.9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span data-call-refresh-label>Refresh Microphone</span>
+                  </button>
+  </div>
+  <div class="msg-menu call-user-context-menu call-audio-settings-menu" id="call-output-settings-menu" role="dialog" aria-label="Output Settings" hidden>
+    <div class="call-audio-device-control">
+      <label for="call-output-device">Output Device</label>
+      <select id="call-output-device" aria-describedby="call-output-device-status"><option value="">System default</option></select>
+      <p class="call-audio-device-status" id="call-output-device-status" role="status" hidden></p>
+    </div>
+    <div class="call-user-volume-control">
+      <div class="call-user-volume-label"><label for="call-output-volume">Output Volume</label><output id="call-output-volume-value" for="call-output-volume">100%</output></div>
+      <input class="call-user-volume-slider" id="call-output-volume" type="range" min="0" max="200" step="1" value="100" aria-valuetext="100%" />
+      <div class="call-user-volume-scale" aria-hidden="true"><span>0%</span><span>200%</span></div>
+    </div>
+
+  </div>
+
+  <div class="user-profile-popover" id="user-profile-popover" hidden>
+    <div class="user-profile-card" id="user-profile-card"></div>
+  </div>
+
+<!-- Bopl Royale loads on demand from activities/bopl-royale/. -->
+
+  <!-- Merge Party v4: local, physics-first activity. -->
+  <!-- Merge Party loads on demand from activities/merge-party/. -->
+
+  <script defer src="./js/runtime/activity-loader.js?v=20261023-file-upload-limit"></script>
+
+  <!-- Local runtime. index.html is always the main page. -->
+  <script defer src="./call-config.js?v=20261023-file-upload-limit"></script>
+  <script defer src="./js/runtime/loader.js?v=20261023-file-upload-limit"></script>
+  <script defer src="./js/runtime/application.js?v=20261023-file-upload-limit"></script>
+  <script defer src="./js/module-manifest.js?v=20261023-file-upload-limit"></script>
+  <script defer src="./call-modules/panel-resize.js?v=20261023-file-upload-limit"></script>
+  <script defer src="./app.js?v=20261023-file-upload-limit"></script>
+</body>
+</html>

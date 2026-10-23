@@ -1,0 +1,11 @@
+{
+  "desktopVersion": "1.7.4",
+  "webVersion": "2026.10.23-1",
+  "assetRevision": "20261023-file-upload-limit",
+  "createdAt": "2026-10-23T18:51:38.0767625+00:00",
+  "source": "Realtime Firebase Admin Panel file upload limit with 100 MB default, dynamic storage Worker and desktop clipboard source; all 463 original paths retained.",
+  "nativeBridge": 1,
+  "mobileRevision": 2026102301,
+  "nativeBinaryChanged": false,
+  "nativeSourceChanged": true
+}
