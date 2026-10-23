@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="shell.css">
+    <script src="shell.js" defer></script>
+  </head>
+  <body>
+    <header class="titlebar">
+      <span class="window-title">Chat App</span>
+      <button id="apply-update" class="update-button" hidden>Update</button>
+      <nav class="window-controls" aria-label="Window controls">
+        <button class="window-button" id="minimize" title="Minimize" aria-label="Minimize">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10"/></svg>
+        </button>
+        <button class="window-button" id="maximize" title="Maximize" aria-label="Maximize">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4H4v3m9-3h3v3M4 13v3h3m9-3v3h-3"/></svg>
+        </button>
+        <button class="window-button close-button" id="close" title="Close" aria-label="Close">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5.5 5.5 9 9m0-9-9 9"/></svg>
+        </button>
+      </nav>
+    </header>
+    <main class="loading-screen" id="loading-screen">
+      <section class="loading-content" aria-labelledby="status-message">
+        <div class="activity" id="activity" aria-hidden="true"><span></span><span></span><span></span></div>
+        <h1 id="status-message">Opening Chat App</h1>
+        <p id="status-detail">Getting the latest version ready.</p>
+        <div class="progress-track" id="progress-track" hidden role="progressbar" aria-label="Loading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
+        <button class="retry-button" id="retry" hidden>Try again</button>
+        <span id="status-announcement" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true">Opening Chat App</span>
+      </section>
+    </main>
+  </body>
+</html>

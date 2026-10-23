@@ -1,0 +1,94 @@
+{
+  "name": "chat-app-desktop",
+  "version": "1.7.4",
+  "description": "Chat App",
+  "author": "Chat App",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.cjs",
+    "predist": "node scripts/benchmark-games.cjs --build-helper",
+    "dist": "electron-builder --win dir --x64 --publish never && node scripts/benchmark-games.cjs --package-x64"
+  },
+  "dependencies": {
+    "adm-zip": "0.5.16"
+  },
+  "devDependencies": {
+    "electron": "44.4.2",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "app.chatapp.desktop",
+    "productName": "Chat App",
+    "asar": true,
+    "electronFuses": {
+      "runAsNode": false,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true
+    },
+    "asarUnpack": [
+      "helpers/*.exe"
+    ],
+    "npmRebuild": false,
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "*.cjs",
+      "helpers/**/*",
+      "ui/**/*",
+      "assets/**/*",
+      "package.json",
+      "spotify-config.json",
+      {
+        "from": "../unread-icons",
+        "to": "assets/unread",
+        "filter": [
+          "*.png"
+        ]
+      },
+      {
+        "from": "../unread-icons-extra",
+        "to": "assets/unread",
+        "filter": [
+          "*.png"
+        ]
+      }
+    ],
+    "extraResources": [
+      {
+        "from": "..",
+        "to": "bundled-app",
+        "filter": [
+          "**/*",
+          "!desktop{,/**/*}",
+          "!node_modules{,/**/*}",
+          "!tests{,/**/*}",
+          "!backend/functions/node_modules{,/**/*}",
+          "!test-results{,/**/*}",
+          "!unread-icons{,/**/*}",
+          "!unread-icons-extra{,/**/*}",
+          "!.git{,/**/*}"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/chat-app.ico"
+    },
+    "portable": {
+      "artifactName": "Chat App.exe"
+    }
+  }
+}

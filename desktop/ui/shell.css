@@ -1,0 +1,94 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #141b21;
+  color: #e5ecf4;
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+button { font: inherit; }
+[hidden] { display: none !important; }
+
+.titlebar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  height: 40px;
+  background: #17212b;
+  border-bottom: 1px solid #22303c;
+  user-select: none;
+  -webkit-app-region: drag;
+  app-region: drag;
+}
+
+.window-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c5d0db;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.window-controls {
+  position: absolute;
+  inset: 0 0 0 auto;
+  display: flex;
+  height: 39px;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.update-button { position:absolute;top:6px;left:12px;height:27px;padding:0 10px;border:1px solid #3a9d72;border-radius:6px;background:#22533f;color:#edf9f3;font-size:12px;cursor:pointer;-webkit-app-region:no-drag;app-region:no-drag; }
+
+.window-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #91a4b5;
+  cursor: default;
+  transition: background-color 100ms ease, color 100ms ease;
+}
+
+.window-button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.45; stroke-linecap: square; stroke-linejoin: miter; }
+.window-button:hover { background: #253340; color: #dce7f1; }
+.window-button:active { background: #304352; }
+.window-button:focus-visible { outline: 1px solid #7eadd9; outline-offset: -4px; }
+.close-button:hover { background: #c83e4c; color: #fff; }
+.close-button:active { background: #ae303d; }
+
+.loading-screen {
+  position: absolute;
+  inset: 40px 0 0;
+  display: grid;
+  place-items: center;
+  padding: 36px;
+  background: radial-gradient(ellipse at 50% 30%, #19242e 0, #141b21 60%);
+}
+
+.loading-content { width: min(100%, 460px); text-align: center; }
+.loading-content h1 { margin: 22px 0 9px; color: #e5ecf4; font-size: 21px; font-weight: 600; line-height: 1.35; }
+.loading-content p { margin: 0; color: #93a5b6; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; white-space: pre-line; }
+.activity { display: flex; align-items: center; justify-content: center; gap: 7px; height: 16px; }
+.activity span { width: 6px; height: 6px; background: #6c9ed0; border-radius: 50%; animation: breathe 1.2s ease-in-out infinite; }
+.activity span:nth-child(2) { animation-delay: 150ms; }
+.activity span:nth-child(3) { animation-delay: 300ms; }
+.loading-screen.has-error .activity span { background: #93a5b6; animation: none; opacity: 0.55; }
+.progress-track { width: 200px; height: 3px; margin: 25px auto 0; border-radius: 2px; overflow: hidden; background: #2a3b49; }
+.progress-fill { width: 0; height: 100%; background: #6c9ed0; transition: width 220ms ease; }
+.retry-button { margin-top: 24px; padding: 9px 22px; border: 1px solid #3d607c; border-radius: 8px; color: #e5ecf4; background: #254057; font-size: 13px; font-weight: 600; cursor: pointer; }
+.retry-button:hover { border-color: #6c9ed0; background: #2c4b66; }
+.retry-button:focus-visible { outline: 2px solid #87b7e4; outline-offset: 3px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@keyframes breathe { 0%, 75%, 100% { opacity: 0.35; transform: translateY(0); } 35% { opacity: 1; transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .activity span { animation: none; opacity: 0.75; } *, *::before, *::after { transition: none !important; } }

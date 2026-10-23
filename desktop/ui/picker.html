@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+    <title>Share Screen — Chat App</title>
+    <link rel="stylesheet" href="picker.css">
+    <script src="picker.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Share Screen</h1>
+        <p>Choose a screen or window to share.</p>
+      </header>
+      <div id="sources" class="source-grid" role="group" aria-label="Screens and windows">
+        <p id="loading" class="empty-state" role="status">Finding screens and windows…</p>
+      </div>
+      <footer>
+        <div class="audio-option" id="audio-option" hidden>
+          <label><input type="checkbox" id="share-audio"><span>Share system audio</span></label>
+          <p>Shares other apps' audio. Chat App call audio is excluded.</p>
+        </div>
+        <div class="actions">
+          <button id="share" class="primary" disabled>Share</button>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+:root { color-scheme: dark; font-family: "Segoe UI", system-ui, sans-serif; color: #e5ecf4; background: #151c22; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+[hidden] { display: none !important; }
+button, input { font: inherit; }
+main { height: 100%; display: flex; flex-direction: column; }
+header { flex: 0 0 auto; padding: 24px 26px 19px; }
+h1 { margin: 0 0 6px; font-size: 21px; font-weight: 600; line-height: 1.3; }
+header p { margin: 0; font-size: 13px; color: #98aaba; line-height: 1.5; }
+.source-grid { flex: 1; min-height: 0; overflow: auto; padding: 3px 26px 23px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 16px; scrollbar-color: #384b5b #151c22; scrollbar-width: thin; }
+.source { min-width: 0; padding: 8px; border: 2px solid #2a3947; border-radius: 10px; background: #1b2630; color: #dce7f1; cursor: pointer; text-align: left; transition: border-color 100ms ease, background-color 100ms ease; }
+.source:hover { background: #23313f; border-color: #52718b; }
+.source[aria-pressed="true"] { border-color: #73a9db; background: #21374a; box-shadow: 0 0 0 1px #73a9db; }
+.source:focus-visible { outline: 2px solid #a7cff3; outline-offset: 3px; }
+.thumbnail { display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 16 / 9; border-radius: 5px; background: #0f151b; overflow: hidden; }
+.thumbnail img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+.source-name { display: block; padding: 9px 2px 3px; font-size: 12px; font-weight: 500; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.empty-state { grid-column: 1 / -1; margin: 40px 0; text-align: center; color: #98aaba; font-size: 13px; line-height: 1.6; }
+footer { flex: 0 0 auto; min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 26px; background: #17212a; border-top: 1px solid #2a3947; }
+.audio-option label { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.audio-option input { width: 15px; height: 15px; margin: 0; accent-color: #6c9ed0; }
+.audio-option p { margin: 4px 0 0 23px; font-size: 11px; color: #98aaba; }
+.actions { display: flex; gap: 10px; margin-left: auto; }
+.actions button { min-width: 84px; padding: 9px 18px; border: 1px solid #405566; border-radius: 7px; color: #e5ecf4; font-size: 13px; font-weight: 600; cursor: pointer; }
+.secondary { background: #24333f; }
+.secondary:hover { background: #304554; }
+.actions .primary { background: #568bc0; border-color: #639ed9; color: #fff; }
+.actions .primary:hover:enabled { background: #669ed6; }
+.actions button:disabled { background: #2a3d4f; border-color: #344b60; color: #7a91a6; cursor: default; }
+.actions button:focus-visible { outline: 2px solid #a7cff3; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
